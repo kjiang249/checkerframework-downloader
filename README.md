@@ -6,6 +6,7 @@ checker-framework/releases.
 The request.py is used to download all releases.
 The clean.py clean up anything under folder "cf" and "afu" created by request.py
 # Expected outputs
+```bash
 downloader folder
 ├── afu
     └──#releases-eisop#.zip
@@ -25,3 +26,4 @@ downloader folder
 │       └──LICENSE.txt
 ├── clean.py
 └── request.py
+```
