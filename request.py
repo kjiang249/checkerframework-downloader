@@ -22,20 +22,13 @@ def request(github_username, github_repoName):
 github_username = "eisop"
 github_repoName = "checker-framework"
 data = request(github_username,github_repoName)
-# gitHubAPI_URL_getTags = f"https://api.github.com/repos/{github_username}/{github_repoName}/releases"
-# response = requests.get(gitHubAPI_URL_getTags, auth=(github_username, github_repoName)) 
-# data = response.json()
 
 #request  annotation-tools release
 annotation_repoName = "annotation-tools"
 annotation_gitHubAPI_URL_getTags = f"https://api.github.com/repos/{github_username}/{annotation_repoName}/releases"
 data_annotation_tools = request(github_username,annotation_repoName)
-# response_annotation_tools = requests.get(annotation_gitHubAPI_URL_getTags, auth=(github_username, annotation_repoName))
-# data_annotation_tools = response_annotation_tools.json()
 
-# #request single github file
-# single_file =requests.get("https://raw.githubusercontent.com/eisop/checker-framework/blob/master/docs/checker-framework-webpage.html")
-# single_file_json = single_file.json()
+
 if not os.path.exists('./cf'):
     os.makedirs('./cf')
 
@@ -75,22 +68,6 @@ def get_release_info(data,folder):
 
 
 get_release_info(data,"cf")
-# for i in range(len(data)):
-#     file_path = "cf/"+data[i]['tag_name']+".zip"
-#     file = data[i]['tag_name']+".zip"
-#     if file not in files:       #check file name with existing zip file name
-#         print(file,"not exists")
-#         urllib.request.urlretrieve(data[i]['assets'][0]['browser_download_url'], file_path)
-#         zip_file_path = "./cf/"+file
-#         with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-#             zip_ref.extractall("./cf")
-
-#get release update date
-# for i in range(len(data)):
-#     date = data[i]['assets'][0]['updated_at']
-#     datestring  = dateutil.parser.isoparse(date)
-#     print(datestring.date())
-
 
 
 root,dirs,files = next(os.walk('./cf', topdown=True)) 
@@ -139,29 +116,9 @@ for i in natsorted(dirs):
     if not os.path.islink(os.path.abspath("./cf/"+dir_path+"/CHANGELOG.md")):
         os.symlink(os.path.abspath("./cf/"+dir_path+"/Docs/CHANGELOG.md"), os.path.abspath("./cf/"+dir_path+"/CHANGELOG.md"))
     
-    # if not os.path.islink(os.path.abspath("./cf/"+dir_path+"/afu")):
-    #     os.symlink(os.path.abspath("./cf/"+dir_path+"/afu/annotation-tools-utilities"), os.path.abspath("./cf/"+dir_path+"/afu"))
-
 if not os.path.exists('./afu'):
     os.makedirs('./afu')
 
 root,dirs,files = next(os.walk('./afu', topdown=True)) #list directories and files in ./cf directory
 #download annotation-tool releases
 get_release_info(data_annotation_tools,"afu")
-# for i in range(len(data_annotation_tools)):
-#     file_path = "afu/"+data_annotation_tools[i]['tag_name']+".zip"
-#     file = data_annotation_tools[i]['tag_name']+".zip"
-#     if file not in files:       #check file name with existing zip file name
-#         print(file,"not exists")
-#         urllib.request.urlretrieve(data_annotation_tools[i]['assets'][0]['browser_download_url'], file_path)
-#         zip_file_path = "./afu/"+file
-#         with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-#             zip_ref.extractall("./afu/"+data_annotation_tools[i]['tag_name'])
-
-#     #change annotation-tools-utilities.html to index.html
-#     if not os.path.islink(os.path.abspath("./afu/"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities/index.html")):
-#         os.symlink(os.path.abspath("./afu/"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities/annotation-file-utilities.html"), os.path.abspath("./afu/"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities/index.html"))
-#     # shutil.move(os.path.abspath("./afu/"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities/annotation-file-utilities.html"),os.path.abspath("./afu/"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities/index.html"))
-#     if not os.path.islink(os.path.abspath("./cf/checker-framework-"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities")):
-#         print("not exists"+data_annotation_tools[i]['tag_name']+"\n")
-#         os.symlink(os.path.abspath("./afu/"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities"), os.path.abspath("./cf/checker-framework-"+data_annotation_tools[i]['tag_name']+"/annotation-file-utilities"))
